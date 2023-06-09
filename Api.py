@@ -43,7 +43,7 @@ def imageToText(file,pua,option):
     img = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'imagetotext','filesName':file.filename,
            'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-           'size':int((len(img)*8)/10000),'id':random.randint(1000000, 9999999),'result':'','resultType':'text'}
+           'size':int(len(img)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'text'}
     img = cv2.imdecode(np.frombuffer(img, np.uint8), -1)
     text = pytesseract.image_to_string(img,lang=option)
     dic['result'] = text
@@ -58,7 +58,7 @@ def pdfToWord(file,pua,option):
     pdf = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'pdftoword','filesName':file.filename,
         'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-        'size':int((len(pdf)*8)/10000),'id':random.randint(1000000, 9999999),'result':'','resultType':'link'}
+        'size':int(len(pdf)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'link'}
     fileDir ='fileStorege/'+dic['filesName']+'-'+str(dic['id'])+'.pdf'
     open(fileDir, 'wb').write(pdf)
     outpath = folderDownload+str(dic['id'])+'.docx'
@@ -86,7 +86,7 @@ def convertDate(data):
     if check['replay'] == False: return check
     dic = {'phone':check['user']['user']['phone'],'section':'convertdate','filesName':data['date'],
         'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-        'size':0,'id':random.randint(1000000, 9999999),'result':'','resultType':'data'}
+        'size':0,'id':random.randint(1000000000, 9999999999),'result':'','resultType':'data'}
     now = datetime.datetime.fromtimestamp(int(data['date'])/1000)
 
     miladi = str(now).split(' ')[0]
@@ -128,7 +128,7 @@ def loremIpsum(data):
     if check['replay'] == False: return check
     dic = {'phone':check['user']['user']['phone'],'section':'loremipsum','filesName':data['option'],
         'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-        'size':0,'id':random.randint(1000000, 9999999),'result':'','resultType':'text'}
+        'size':0,'id':random.randint(1000000000, 9999999999),'result':'','resultType':'text'}
     textDb = [x['text'] for x in db['randomText'].find({'type':data['option']},{'_id':0,'text':1})]
     text = ''
     for i in range(0,int(data['amount'])):
@@ -145,7 +145,7 @@ def pdfToText(file,pua,option):
     pdf = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'pdftotext','filesName':file.filename,
         'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-        'size':int((len(pdf)*8)/10000),'id':random.randint(1000000, 9999999),'result':'','resultType':'text'}
+        'size':int(len(pdf)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'text'}
     fileDir ='fileStorege/'+str(dic['id'])+'.pdf'
     open(fileDir, 'wb').write(pdf)
 
@@ -168,7 +168,7 @@ def compressimage(file,pua,option):
     img = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'compressimage','filesName':file.filename,
            'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-           'size':int(len(img)/1.024),'id':random.randint(1000000, 9999999),'result':'','resultType':'link'}
+           'size':int(len(img)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'link'}
     fileDir ='fileStorege/'+str(dic['id'])+file.filename
     img = cv2.imdecode(np.frombuffer(img, np.uint8), -1)
     cv2.imwrite(fileDir,img)
@@ -195,7 +195,7 @@ def imagefrompdf(file,pua):
     pdf = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'imagefrompdf','filesName':file.filename,
            'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-           'size':int(len(pdf)/1.024),'id':random.randint(1000000, 9999999),'result':'','resultType':'link'}
+           'size':int(len(pdf)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'link'}
     fileDir ='fileStorege/'+str(dic['id'])+file.filename
     open(fileDir, 'wb').write(pdf)
     outpath = 'download/'+str(dic['id'])+(file.filename.split('.')[0])+'.zip'
@@ -218,7 +218,7 @@ def compresspdf(file,pua):
     pdf = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'compresspdf','filesName':file.filename,
            'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-           'size':int(len(pdf)/1.024),'id':random.randint(1000000, 9999999),'result':'','resultType':'link'}
+           'size':int(len(pdf)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'link'}
     fileDir ='fileStorege/'+str(dic['id'])+file.filename
     open(fileDir, 'wb').write(pdf)
     outpath = 'download/'+str(dic['id'])+'.pdf'
@@ -245,7 +245,7 @@ def mergepdf(file1,file2,pua):
     pdf2 = file2.read()
     dic = {'phone':check['user']['user']['phone'],'section':'mergepdf','filesName':file1.filename,
            'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
-           'size':int(len(pdf1)/1.024),'id':random.randint(1000000, 9999999),'result':'','resultType':'link'}
+           'size':int(len(pdf1)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'link'}
     fileDir1 ='fileStorege/'+str(dic['id'])+file1.filename
     fileDir2 ='fileStorege/'+str(dic['id'])+file1.filename
     open(fileDir1, 'wb').write(pdf1)
