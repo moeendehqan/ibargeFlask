@@ -119,7 +119,12 @@ def mergepdf():
     pua = request.form['pua']
     return Api.mergepdf(file1,file2,pua)
 
-
+@app.route('/api/extractcolors',methods=['POST'])
+def extractColors():
+    file = request.files['file']
+    pua = request.form['pua']
+    option = request.form['option']
+    return Api.extractColors(file,option,pua)
 
 @app.route('/gethistori/imagetotext',methods=['POST'])
 def getHistori_imageToText():
@@ -147,6 +152,10 @@ def getHistori_mergepdf():
     data = request.get_json()
     return getData.getHistori_mergepdf(data)
 
+@app.route('/gethistori/extractcolors',methods=['POST'])
+def getHistori_extractColors():
+    data = request.get_json()
+    return getData.getHistori_extractColors(data)
 
 @app.route('/download/<file>',methods=['GET'])
 def download(file):

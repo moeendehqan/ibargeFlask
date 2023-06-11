@@ -17,6 +17,8 @@ import function
 from PIL import Image
 import os
 from pypdf import PdfMerger
+from Pylette import extract_colors
+
 
 client = pymongo.MongoClient()
 db = client['barge2']
@@ -260,3 +262,24 @@ def mergepdf(file1,file2,pua):
     db['histori'].insert_one(dic)
     histori = getHistoriByPhone(check['user']['user']['phone'],'mergepdf',5)
     return {'replay':True,'result':dic['result'],'histori':histori}
+
+def extractColors(file,option,pua):
+    if file.filename.split('.')[-1] not in ['jpg','png','jpeg']:return {'replay':False,'msg':'فرمت فایل مجاز نیست'}
+    check = CheckUserForApi(pua)
+    if check['replay'] == False: return check
+    img = file.read()
+
+    dic = {'phone':check['user']['user']['phone'],'section':'extractcolors','filesName':file.filename,
+           'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
+           'size':int(len(img)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'data'}
+    fileDir ='fileStorege/'+str(dic['id'])+file.filename
+    open(fileDir, 'wb').write(img)
+    pallet = extract_colors(fileDir, palette_size=int(option), resize=True, mode='MC', sort_mode='luminance')
+    result = []
+    for i in pallet:
+        result.append(i.rgb)
+    dic['result'] = result
+    print(result)
+    db['histori'].insert_one(dic)
+    histori = getHistoriByPhone(check['user']['user']['phone'],'extractcolors',5)
+    return {'replay':True,'result':result,'histori':histori}

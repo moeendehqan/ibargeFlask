@@ -97,3 +97,9 @@ def getHistori_mergepdf(data):
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'mergepdf',5)
     return {'replay':True,'histori':histori}
+
+def getHistori_extractColors(data):
+    user = getUserByPUA(data['pua'])
+    if user['replay']==False:return user
+    histori = getHistoriByPhone(user['user']['phone'],'extractcolors',5)
+    return {'replay':True,'histori':histori}
