@@ -166,6 +166,10 @@ def pay_create():
     data = request.get_json()
     return pay.CreatePay(data)
 
+@app.route('/pay/check',methods=['POST'])
+def pay_check():
+    data = request.get_json()
+    return pay.Check(data)
 
 if __name__ == '__main__':
     #serve(app, host="0.0.0.0", port=8080)

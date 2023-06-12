@@ -27,3 +27,11 @@ def CreatePay(data):
         db['paymentsMade'].insert_one(dic)
         return {'replay':True,'responseCode':responseCode}
     return {'replay':False,'msg':'خطا لطفا مجدد امتحان کنید یا با پشتیبانی تماس بگیرید'}
+
+
+
+def Check(data):
+    check = CheckUserForApi(data['pua'])
+    if check['replay'] == False: return check
+    print(data)
+    return {'replay':True}
