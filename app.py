@@ -126,6 +126,12 @@ def extractColors():
     option = request.form['option']
     return Api.extractColors(file,option,pua)
 
+@app.route('/api/removebg',methods=['POST'])
+def removeBg():
+    file = request.files['file']
+    pua = request.form['pua']
+    return Api.removeBg(file,pua)
+
 @app.route('/gethistori/imagetotext',methods=['POST'])
 def getHistori_imageToText():
     data = request.get_json()
@@ -156,6 +162,12 @@ def getHistori_mergepdf():
 def getHistori_extractColors():
     data = request.get_json()
     return getData.getHistori_extractColors(data)
+
+@app.route('/gethistori/removebg',methods=['POST'])
+def getHistori_removebg():
+    data = request.get_json()
+    return getData.getHistori_removebg(data)
+
 
 @app.route('/download/<file>',methods=['GET'])
 def download(file):

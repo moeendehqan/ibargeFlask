@@ -103,3 +103,10 @@ def getHistori_extractColors(data):
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'extractcolors',5)
     return {'replay':True,'histori':histori}
+
+
+def getHistori_removebg(data):
+    user = getUserByPUA(data['pua'])
+    if user['replay']==False:return user
+    histori = getHistoriByPhone(user['user']['phone'],'removebg',5)
+    return {'replay':True,'histori':histori}

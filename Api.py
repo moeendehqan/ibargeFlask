@@ -18,6 +18,7 @@ from PIL import Image
 import os
 from pypdf import PdfMerger
 from Pylette import extract_colors
+from rembg import remove
 
 
 client = pymongo.MongoClient()
@@ -283,3 +284,26 @@ def extractColors(file,option,pua):
     db['histori'].insert_one(dic)
     histori = getHistoriByPhone(check['user']['user']['phone'],'extractcolors',5)
     return {'replay':True,'result':result,'histori':histori}
+
+
+
+def removeBg(file,pua):
+    if file.filename.split('.')[-1] not in ['jpg','png','jpeg']:return {'replay':False,'msg':'فرمت فایل مجاز نیست'}
+    check = CheckUserForApi(pua)
+    if check['replay'] == False: return check
+    img = file.read()
+
+    dic = {'phone':check['user']['user']['phone'],'section':'removebg','filesName':file.filename,
+           'JalaliDate':JalaliDate.today().isoformat(),'datatime':datetime.datetime.now().ctime(),
+           'size':int(len(img)/1.024),'id':random.randint(1000000000, 9999999999),'result':'','resultType':'data'}
+    fileDir ='fileStorege/'+str(dic['id'])+file.filename
+    open(fileDir, 'wb').write(img)
+    input = Image.open(fileDir)
+    output = remove(input)
+    output = output.convert("RGB")
+    outpath = 'download/'+str(dic['id'])+'.jpg'
+    output.save(outpath)
+    dic['result'] = str(dic['id'])+'.jpg'
+    db['histori'].insert_one(dic)
+    histori = getHistoriByPhone(check['user']['user']['phone'],'removebg',5)
+    return {'replay':True,'result':dic['result'] ,'histori':histori}
