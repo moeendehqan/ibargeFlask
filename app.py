@@ -168,6 +168,10 @@ def getHistori_removebg():
     data = request.get_json()
     return getData.getHistori_removebg(data)
 
+@app.route('/delhistori',methods=['POST'])
+def delHistori():
+    data = request.get_json()
+    return getData.delHistori(data)
 
 @app.route('/download/<file>',methods=['GET'])
 def download(file):

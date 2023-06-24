@@ -110,3 +110,12 @@ def getHistori_removebg(data):
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'removebg',5)
     return {'replay':True,'histori':histori}
+
+
+def delHistori(data):
+    user = getUserByPUA(data['pua'])
+    if user['replay']==False:return user
+    print(data)
+    print(user)
+    db['histori'].delete_one({'phone':user['user']['phone'],'section':data['type'],'filesName':data['filename'],'JalaliDate':data['date'],'result':data['result']})
+    return {'replay':True}
