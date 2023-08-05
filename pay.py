@@ -10,7 +10,7 @@ db = client['barge2']
 
 TokenPayPing = 'OLN--szPEmiOm0-3bvMstEU8hhpiZqsW3ORyvDzYhPE'
 
-payDic = {'pay1':25000,'pay2':42500,'pay3':56250,'pay6':90000,'pay12':150000}
+payDic = {'pay1':5000,'pay1':25000,'pay2':42500,'pay3':56250,'pay6':90000,'pay12':150000}
 
 def CreatePay(data):
     check = CheckUserForApi(data['pua'])

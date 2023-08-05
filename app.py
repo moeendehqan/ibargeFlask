@@ -10,6 +10,7 @@ import getData
 import Login
 import setData
 import Api
+import admin
 client = pymongo.MongoClient()
 db = client['barge2']
 
@@ -186,6 +187,17 @@ def pay_create():
 def pay_check():
     data = request.get_json()
     return pay.Check(data)
+
+
+@app.route('/admin/login',methods=['POST'])
+def admin_login():
+    data = request.get_json()
+    return admin.login(data)
+
+@app.route('/admin/cookie',methods=['POST'])
+def admin_cookie():
+    data = request.get_json()
+    return admin.cookie(data)
 
 if __name__ == '__main__':
     #serve(app, host="0.0.0.0", port=8080)

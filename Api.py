@@ -41,7 +41,7 @@ def getHistoriByPhone(phone,section,limit):
 
 def imageToText(file,pua,option):
     if file.filename.split('.')[-1] not in ['jpg','png','jpeg']:return {'replay':False,'msg':'فرمت فایل مجاز نیست'}
-    check = CheckUserForApi(pua)
+    check = CheckUserForApi(pua,True)
     if check['replay'] == False: return check
     img = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'imagetotext','filesName':file.filename,
@@ -56,7 +56,7 @@ def imageToText(file,pua,option):
 
 def pdfToWord(file,pua,option):
     if file.filename.split('.')[-1] not in ['pdf']:return {'replay':False,'msg':'فرمت فایل مجاز نیست'}
-    check = CheckUserForApi(pua)
+    check = CheckUserForApi(pua,True)
     if check['replay'] == False: return check
     pdf = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'pdftoword','filesName':file.filename,
@@ -193,7 +193,7 @@ def compressimage(file,pua,option):
 
 def imagefrompdf(file,pua):
     if file.filename.split('.')[-1] not in ['pdf']:return {'replay':False,'msg':'فرمت فایل مجاز نیست'}
-    check = CheckUserForApi(pua)
+    check = CheckUserForApi(pua,True)
     if check['replay'] == False: return check
     pdf = file.read()
     dic = {'phone':check['user']['user']['phone'],'section':'imagefrompdf','filesName':file.filename,
@@ -289,7 +289,7 @@ def extractColors(file,option,pua):
 
 def removeBg(file,pua):
     if file.filename.split('.')[-1] not in ['jpg','png','jpeg']:return {'replay':False,'msg':'فرمت فایل مجاز نیست'}
-    check = CheckUserForApi(pua)
+    check = CheckUserForApi(pua,True)
     if check['replay'] == False: return check
     img = file.read()
 
