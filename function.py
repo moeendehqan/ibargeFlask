@@ -1,4 +1,7 @@
 import sys
+import ctypes
+
+
 if sys.version_info >= (3, 6):
     import zipfile
 else:
@@ -30,3 +33,8 @@ def extract_images_from_pdf(pdf_path, output_zip_path):
                     # Delete the temporary image file
                     os.remove(image_path)
     return image_counter
+
+
+
+def set_process_name(new_name):
+    ctypes.windll.kernel32.SetConsoleTitleW(new_name)

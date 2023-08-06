@@ -2,7 +2,7 @@ from flask import Flask, request, send_file
 import json
 import warnings
 from flask_cors import CORS
-import winreg as reg
+from function import set_process_name
 import pymongo
 from waitress import serve
 import pay
@@ -11,22 +11,22 @@ import Login
 import setData
 import Api
 import admin
+
 client = pymongo.MongoClient()
 db = client['barge2']
 
 
-def addToReg():
-    key = reg.OpenKey(reg.HKEY_CURRENT_USER , "Software\Microsoft\Windows\CurrentVersion\Run" ,0 , reg.KEY_ALL_ACCESS)
-    reg.SetValueEx(key ,"ibargeFlask" , 0 , reg.REG_SZ , __file__)
-    reg.CloseKey(key)
 
-addToReg()
 warnings.filterwarnings("ignore")
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/getmenu',methods=['POST'])
+@app.route('/',methods=['GET'])
+def index():
+    return 'server run'
+
+@app.route('/getmenu',methods=['POST','GET'])
 def getmenu():
     return getData.getMenu()
 
@@ -199,6 +199,13 @@ def admin_cookie():
     data = request.get_json()
     return admin.cookie(data)
 
+@app.route('/admin/getusers',methods=['POST'])
+def admin_getusers():
+    data = request.get_json()
+    return admin.getusers(data)
+
+
 if __name__ == '__main__':
-    #serve(app, host="0.0.0.0", port=8080)
+    set_process_name("ibargeServer" )
+    #serve(app, host="0.0.0.0", port=2101)
     app.run(host='0.0.0.0', debug=True)

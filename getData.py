@@ -8,7 +8,7 @@ import base64
 import crypto
 import string
 from Api import getHistoriByPhone
-
+import json
 client = pymongo.MongoClient()
 db = client['barge2']
 
@@ -34,7 +34,7 @@ def getHomeMenu():
     pages = pages.sort_values(by=['sort'])
     pages = pages[['title','url','caption']]
     pages = pages.to_dict('records')
-    return pages
+    return json.dumps(pages)
 
 
 def getCaptcha():
@@ -59,7 +59,7 @@ def getCaptcha():
             lineColor = (random.randint(0,150),random.randint(0,150),random.randint(0,150))
             cv2.line(captcha,pt1,pt2,lineColor,1)
     stringImg = base64.b64encode(cv2.imencode('.jpg', captcha)[1]).decode()
-    return {'captchaCode':crypto.encrypt(texcode),'captchaImg':stringImg}
+    return json.dumps({'captchaCode':crypto.encrypt(texcode),'captchaImg':stringImg})
 
 
 
@@ -70,13 +70,13 @@ def getHistori_imageToText(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'imagetotext',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 def getHistori_pdfToWord(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'pdftoword',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 
 
@@ -84,32 +84,32 @@ def getHistori_compressimage(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'compressimage',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 def getHistori_compresspdf(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'compresspdf',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 def getHistori_mergepdf(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'mergepdf',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 def getHistori_extractColors(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'extractcolors',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 
 def getHistori_removebg(data):
     user = getUserByPUA(data['pua'])
     if user['replay']==False:return user
     histori = getHistoriByPhone(user['user']['phone'],'removebg',5)
-    return {'replay':True,'histori':histori}
+    return json.dumps({'replay':True,'histori':histori})
 
 
 def delHistori(data):
@@ -118,4 +118,4 @@ def delHistori(data):
     print(data)
     print(user)
     db['histori'].delete_one({'phone':user['user']['phone'],'section':data['type'],'filesName':data['filename'],'JalaliDate':data['date'],'result':data['result']})
-    return {'replay':True}
+    return json.dumps({'replay':True})
